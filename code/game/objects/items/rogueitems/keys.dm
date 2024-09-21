@@ -304,6 +304,12 @@
 	icon_state = "spikekey"
 	lockid = "bog_dungeon"
 
+/obj/item/roguekey/bog_master
+	name = "bog master key"
+	desc = "This key opens the bog master's room."
+	icon_state = "spikekey"
+	lockid = "bog_master"
+
 /obj/item/roguekey/town_barracks
 	name = "town barracks key"
 	desc = "This key opens the town barracks."
