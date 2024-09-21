@@ -298,23 +298,11 @@
 	icon_state = "spikekey"
 	lockid = "bog_gatehouse"
 	
-/obj/item/roguekey/bog_barracks
-	name = "bog barracks key"
-	desc = "This key opens the bog barracks."
-	icon_state = "spikekey"
-	lockid = "bog_barracks"
-	
 /obj/item/roguekey/bog_dungeon
 	name = "bog dungeon key"
 	desc = "This key opens the bog dungeon."
 	icon_state = "spikekey"
 	lockid = "bog_dungeon"
-	
-/obj/item/roguekey/bog_armory
-	name = "bog armory key"
-	desc = "This key opens the bog armory."
-	icon_state = "spikekey"
-	lockid = "bog_armory"
 
 /obj/item/roguekey/town_barracks
 	name = "town barracks key"
