@@ -2924,7 +2924,7 @@
 	lockid = "bog_gatehouse";
 	dir = 8
 	},
-/turf/closed,
+/turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "dmw" = (
 /obj/structure/fluff/walldeco/painting/queen{
@@ -2982,8 +2982,6 @@
 /obj/item/roguekey/keep_gatehouse,
 /obj/item/roguekey/bog_gatehouse,
 /obj/item/roguekey/bog_dungeon,
-/obj/item/roguekey/bog_barracks,
-/obj/item/roguekey/bog_armory,
 /obj/item/roguekey/tower,
 /obj/item/roguekey/walls,
 /obj/item/roguekey/town_armory,
@@ -3870,6 +3868,10 @@
 /obj/structure/fermenting_barrel/water,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/manor)
+"ekv" = (
+/obj/machinery/light/rogue/firebowl/standing,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors)
 "ekQ" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grass,
@@ -5445,7 +5447,7 @@
 /area/rogue/under/town/basement)
 "fVQ" = (
 /obj/structure/closet/crate/chest{
-	lockid = "bog_gatehouse"
+	lockid = "bog_master"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
@@ -5597,8 +5599,11 @@
 	},
 /area/rogue/outdoors/town)
 "gin" = (
-/obj/structure/stairs,
-/turf/closed,
+/obj/structure/mineral_door/wood/donjon{
+	locked = 1;
+	lockid = "bog_dungeon"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "giJ" = (
 /obj/structure/fluff/statue/tdummy,
@@ -9639,7 +9644,7 @@
 	locked = 1;
 	lockid = "bog_gatehouse"
 	},
-/turf/closed,
+/turf/open/floor/rogue/metal,
 /area/rogue/indoors)
 "kNK" = (
 /obj/structure/stairs,
@@ -15929,6 +15934,13 @@
 	icon_state = "weird1"
 	},
 /area/rogue/indoors/town/shop)
+"rYW" = (
+/obj/structure/mineral_door/wood{
+	locked = 1;
+	lockid = "bog_master"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors)
 "rZi" = (
 /turf/open/floor/rogue/rooftop{
 	icon_state = "roofg"
@@ -282070,7 +282082,7 @@ hHI
 pAV
 pAV
 pAV
-oGO
+rYW
 pAV
 pAV
 pAV
@@ -290906,8 +290918,8 @@ hcW
 hcW
 hcW
 pAV
-jCh
-gin
+hHF
+hHF
 hHF
 hHF
 hHF
@@ -291308,8 +291320,8 @@ hcW
 hcW
 hcW
 hHI
-jCh
-gin
+hHF
+hHF
 hHF
 hHF
 hHF
@@ -291713,7 +291725,7 @@ hHI
 hHF
 hHF
 hHF
-hHF
+ekv
 ebg
 hHF
 kFc
@@ -391408,7 +391420,7 @@ xou
 xou
 xou
 xou
-oGO
+gin
 xou
 xou
 xou
