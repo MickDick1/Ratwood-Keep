@@ -106,7 +106,7 @@
 
 /datum/intent/whip/crack
 	name = "crack"
-	blade_class = BCLASS_CUT
+	blade_class = BCLASS_BLUNT
 	attack_verb = list("cracks") //something something dwarf fotresss
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	chargetime = 0
@@ -123,6 +123,7 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	chargetime = 0
 	recovery = 10
+	damfactor = .5
 	penfactor = 0
 	reach = 2
 	icon_state = "inpunish"
