@@ -140,3 +140,104 @@
 	result = /obj/item/bedroll
 	reqs = list(/obj/item/natural/hide/cured = 2, /obj/item/natural/cloth = 2, /obj/item/rope = 1)
 	sellprice = 50
+
+/// ADVANCED LEATHER
+
+/datum/crafting_recipe/roguetown/sewing/leather/boots
+	name = "hardened leather boots (leather, fiber; ADEPT)"
+	result = /obj/item/clothing/shoes/roguetown/armor/leather/advanced
+	reqs = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 4
+
+/datum/crafting_recipe/roguetown/sewing/leather/gloves
+	name = "hardened leather gloves (leather, fiber; ADEPT)"
+	result = /obj/item/clothing/gloves/roguetown/leather/advanced
+	reqs = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 4
+
+/datum/crafting_recipe/roguetown/sewing/leather/braces
+	name = "hardened leather braces (leather, fiber; ADEPT)"
+	result = /obj/item/clothing/wrists/roguetown/bracers/leather/advanced
+	reqs = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 4
+
+/datum/crafting_recipe/roguetown/sewing/leather/coat
+	name = "hardened leather coat (2 leather, fiber; ADEPT)"
+	result = /obj/item/clothing/suit/roguetown/armor/leather/advanced
+	reqs = list(/obj/item/natural/hide/cured = 2,
+				/obj/item/natural/fibers = 1)
+	skill_level = 4
+
+/datum/crafting_recipe/roguetown/sewing/leather/helmet
+	name = "hardened leather helmet (leather, fiber; ADEPT)"
+	result = /obj/item/clothing/head/roguetown/helmet/leather/advanced
+	reqs = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 4
+
+/datum/crafting_recipe/roguetown/sewing/leather/neck
+	name = "hardened leather gorget (leather, fiber; ADEPT)"
+	result = /obj/item/clothing/neck/roguetown/leather
+	reqs = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 4
+
+/datum/crafting_recipe/roguetown/sewing/leather/chausses
+	name = "hardened leather chausses (2 leather, fiber; ADEPT)"
+	result = /obj/item/clothing/under/roguetown/trou/leather/advanced
+	reqs = list(/obj/item/natural/hide/cured = 2,
+				/obj/item/natural/fibers = 1)
+	skill_level = 4
+
+/// MASTERWORK
+
+/datum/crafting_recipe/roguetown/sewing/leather/boots/masterwork
+	name = "masterwork leather boots (leather uncured, essence, fiber; EXPERT)"
+	result = /obj/item/clothing/shoes/roguetown/armor/leather/masterwork
+	reqs = list(/obj/item/clothing/shoes/roguetown/armor/leather = 1,
+				/obj/item/natural/cured/essence = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 5
+
+/datum/crafting_recipe/roguetown/sewing/leather/gloves/masterwork
+	name = "masterwork leather gloves (leather uncured, essence, fiber; EXPERT)"
+	result = /obj/item/clothing/gloves/roguetown/leather/masterwork
+	reqs = list(/obj/item/clothing/gloves/roguetown/leather = 1,
+				/obj/item/natural/cured/essence = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 5
+
+/datum/crafting_recipe/roguetown/sewing/leather/bracers/masterwork
+	name = "masterwork leather bracers (leather uncured, essence, fiber; EXPERT)"
+	result = /obj/item/clothing/wrists/roguetown/bracers/leather/masterwork
+	reqs = list(/obj/item/clothing/wrists/roguetown/bracers/leather = 1,
+				/obj/item/natural/cured/essence = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 5
+
+/datum/crafting_recipe/roguetown/sewing/leather/coat/masterwork
+	name = "masterwork leather coat (leather uncured, essence, fiber; EXPERT)"
+	result = /obj/item/clothing/suit/roguetown/armor/leather/masterwork
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/leather = 1,
+				/obj/item/natural/cured/essence = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 5
+
+/datum/crafting_recipe/roguetown/sewing/leather/helmet/masterwork
+	name = "masterwork leather helmet (leather uncured, essence, fiber; EXPERT)"
+	result = /obj/item/clothing/head/roguetown/helmet/leather/masterwork
+	reqs = list(/obj/item/clothing/head/roguetown/helmet/leather = 1,
+				/obj/item/natural/cured/essence = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 5
+
+/datum/crafting_recipe/roguetown/sewing/leather/chausses/masterwork
+	name = "masterwork leather chausses (leather uncured, essence, fiber; EXPERT)"
+	result = /obj/item/clothing/under/roguetown/trou/leather/masterwork
+	reqs = list(/obj/item/clothing/under/roguetown/trou/leather = 1,
+				/obj/item/natural/cured/essence = 1,
+				/obj/item/natural/fibers = 1)
+	skill_level = 5
