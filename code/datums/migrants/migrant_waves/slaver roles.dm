@@ -219,6 +219,7 @@
 	show_wanderer_examine = FALSE
 	show_foreign_examine = TRUE
 
+
 /datum/outfit/job/roguetown/slaver/slavez/pre_equip(mob/living/carbon/human/H) 
 	..()
 	shirt = /obj/item/clothing/suit/roguetown/shirt/exoticsilkbra 
@@ -249,5 +250,9 @@
 		H.change_stat("speed", 1)
 		H.change_stat("fortune", -1)
 		H.cmode_music = 'sound/music/combat_zybantine.ogg'
+	if(istype(H.dna.species, /datum/species/goblinp))
+		H.set_patron(/datum/patron/inhumen/graggar)
+		ADD_TRAIT(H, TRAIT_DARKVISION, TRAIT_GENERIC)
+		H.ventcrawler = 2
 
 	ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
