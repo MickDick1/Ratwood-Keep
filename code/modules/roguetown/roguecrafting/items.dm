@@ -132,7 +132,6 @@
 	name = "strung bow"
 	result = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	reqs = list(/obj/item/natural/bowstring = 1, /obj/item/grown/log/tree/bowpartial = 1)
-	skillcraft = /datum/skill/combat/bows
 	verbage_simple = "string together"
 	verbage = "strings together"
 	skill_level = 2
@@ -646,3 +645,13 @@
 	reqs = list(/obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 2,)
 	skill_level = 1
 	skillcraft = /datum/skill/craft/crafting
+
+/datum/crafting_recipe/roguetown/wickercloak
+	name = "wickercloak"
+	result = /obj/item/clothing/cloak/wickercloak
+	reqs = list(
+		/obj/item/natural/dirtclod = 1,
+		/obj/item/grown/log/tree/stick = 5,
+		/obj/item/natural/fibers = 3,
+		)
+	skill_level = 0

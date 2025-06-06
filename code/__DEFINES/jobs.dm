@@ -123,6 +123,7 @@
 #define MONK		(1<<1)
 #define GRAVEDIGGER	(1<<2)
 #define DRUID		(1<<3)
+#define HOSPITALLER	(1<<4)
 
 /// INQUISITION
 #define INQUISITION		(1<<3)
@@ -257,6 +258,7 @@
 #define JDO_DRUID 10.3
 #define JDO_NOVITIATE 10.4
 #define JDO_GRAVEMAN 10.5
+#define JDO_HOSPITALLER 10.6
 
 #define JDO_PURITAN 11
 #define JDO_SHEPHERD 11.1
@@ -296,7 +298,7 @@
 #define JDO_VET 31.2
 #define JDO_SEELIE 31.3
 
-#define JDO_VAGRANT 33
+#define JDO_VAGRANT 34
 
 #define JDO_PRISONERR 35
 #define JDO_PRISONERB 35.1
@@ -314,7 +316,6 @@
 #define JDO_REFUGEE 42.1
 #define JDO_MIGRANT 42.2
 #define JDO_BANDIT 42.3
-
 
 #define MANOR_ROLES \
 	/datum/job/roguetown/jester,\
@@ -345,6 +346,7 @@
 #define CHURCH_ROLES \
 	/datum/job/roguetown/novitiate,\
 	/datum/job/roguetown/druid,\
+	/datum/job/roguetown/hospitaller,\
 	/datum/job/roguetown/monk,\
 	/datum/job/roguetown/undertaker,\
 	/datum/job/roguetown/priest,\
@@ -407,4 +409,5 @@
 #define FOREIGNER_ROLES \
 	/datum/job/roguetown/refugee,\
 	/datum/job/roguetown/migrant,\
-	/datum/job/roguetown/bandit,
+	/datum/job/roguetown/bandit
+

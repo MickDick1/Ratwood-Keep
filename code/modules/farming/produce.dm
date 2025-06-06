@@ -20,17 +20,22 @@
 		var/turf/location = get_turf(src)
 		if(seed && (user.used_intent.blade_class == BCLASS_BLUNT) && (!user.used_intent.noaa))
 			playsound(src,'sound/items/seedextract.ogg', 100, FALSE)
-			if(prob(5))
+			var/farming_skill = user.mind.get_skill_level(/datum/skill/labor/farming)
+			var/chance_to_ruin = 50 - (farming_skill * 10)
+			if(prob(chance_to_ruin))
 				user.visible_message(span_warning("[user] fails to extract the seeds."))
 				qdel(src)
 				return
 			user.visible_message(span_info("[user] extracts the seeds."))
 			new seed(location)
-			if(prob(90))
+			var/chance_to_get_seeds =  (farming_skill * 30)
+			if(istype(weapon, /obj/item/rogueweapon/thresher))
+				chance_to_get_seeds += 80
+			if(prob(chance_to_get_seeds))
 				new seed(location)
-			if(prob(23))
+			if(prob(chance_to_get_seeds-60))
 				new seed(location)
-			if(prob(6))
+			if(prob(chance_to_get_seeds-80))
 				new seed(location)
 			qdel(src)
 			return
@@ -126,7 +131,7 @@
 		H.dropItemToGround(H.head)
 		return 0
 
-/obj/item/reagent_containers/food/snacks/grown/apple/equipped(mob/M)
+/obj/item/reagent_containers/food/snacks/grown/apple/equipped(mob/M, slot, initial = FALSE, silent = FALSE)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -198,6 +203,22 @@
 	grind_results = list(/datum/reagent/berrypoison = 5)
 	color_index = "bad"
 	mill_result = /obj/item/reagent_containers/powder/alch/berryp
+
+//pyroclastic flowers - stonekeep port
+/obj/item/reagent_containers/food/snacks/grown/rogue/fyritius
+	name = "fyritius flower"
+	seed = /obj/item/seeds/fyritius
+	desc = "A delicate orange flower that radiates warmth."
+	icon_state = "fyritius"
+	filling_color = "#ff5e00"
+	tastes = list("tastes like a burning coal and fire" = 1)
+	bitesize = 1
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/fyritiusnectar = 5)
+	dropshrink = 0.8
+	rotprocess = null
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 1
+	throw_range = 3
 
 /obj/item/reagent_containers/food/snacks/grown/rogue/sweetleaf
 	seed = /obj/item/seeds/sweetleaf

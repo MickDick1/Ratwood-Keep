@@ -31,7 +31,7 @@
 	if (QDELETED(src))
 		return 0
 
-	if(. && (mode != AI_OFF))
+	if(. && (mode != NPC_AI_OFF))
 		handle_ai()
 
 	if(advsetup)
@@ -69,6 +69,14 @@
 					if(part)
 						part.add_wound(/datum/wound/slash)
 			adjustToxLoss(0.3)
+		if(HAS_TRAIT(src, TRAIT_ROTTOUCHED))	//shamelessly copied leper code. But if we're dealing with an apocalyptic rot...
+			if((!mob_timers["rot_bleed"] || mob_timers["rot_bleed"] + 15 MINUTES < world.time)&& patron.type != /datum/patron/divine/pestra )
+				if(prob(10))
+					to_chat(src, span_warning("My rot-scarred skin opens and bleeds..."))
+					mob_timers["rot_bleed"] = world.time
+					var/obj/item/bodypart/part = pick(bodyparts)
+					if(part)
+						part.add_wound(/datum/wound/slash)
 		//heart attack stuff
 		handle_curses()
 		handle_heart()
@@ -80,7 +88,7 @@
 			charflaw.flaw_on_life(src)
 		if(health <= 0)
 			apply_damage(2, OXY)
-		if(mode == AI_OFF && !client && !HAS_TRAIT(src, TRAIT_NOSLEEP))
+		if(mode == NPC_AI_OFF && !client && !HAS_TRAIT(src, TRAIT_NOSLEEP))
 			if(mob_timers["slo"])
 				if(world.time > mob_timers["slo"] + 90 SECONDS)
 					Sleeping(100)

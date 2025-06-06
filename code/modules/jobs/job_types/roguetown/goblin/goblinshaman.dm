@@ -9,7 +9,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/goblinp)
 	spells = list(SPELL_FETCH, SPELL_PRESTIDIGITATION,
-	SPELL_MESSAGE, SPELL_DIAGNOSE, SPELL_LEARNSPELL, SPELL_CPR, SPELL_LESSER_HEAL)
+	SPELL_MESSAGE, SPELL_DIAGNOSE, SPELL_LEARNSPELL, SPELL_LESSER_HEAL)
 	tutorial = "Were you Humen, they'd call you a sorcerer. Perhaps a witch, even. But you know better than the rest. \
 	You're one of Graggar's chosen. A vessel for his power in this world, for better or worse. Serve as a spiritual advisor to your Chief. \
 	Assure he has all he needs to succeed, and, should he fail, take his place."
@@ -53,6 +53,7 @@
 		H.mind.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 		H.change_stat("intelligence", 6)
 		H.change_stat("fortune", 2)
+		H.ventcrawler = VENTCRAWLER_ALWAYS
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_spells(H)//No real spells of Graggar, yet.

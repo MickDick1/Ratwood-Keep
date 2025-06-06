@@ -24,6 +24,7 @@
 	give_bank_account = 26
 	min_pq = 8
 	max_pq = null
+	can_leave_round = FALSE
 
 	cmode_music = 'sound/music/combat_guard2.ogg'
 
@@ -93,6 +94,7 @@
 			H.update_hair()
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_WANTED_POSTER_READ, TRAIT_GENERIC)
 
 /obj/effect/proc_holder/spell/self/convertrole
 	name = "Recruit Beggar"
@@ -175,7 +177,7 @@
 	overlay_state = "recruit_guard"
 	recruitment_faction = "Watchman"
 	recruitment_message = "Serve the town guard, %RECRUIT!"
-	accept_message = "FOR THE DUKE!"
+	accept_message = "FOR THE DUCHY!"
 	refuse_message = "I refuse."
 
 /obj/effect/proc_holder/spell/self/convertrole/guard/convert(mob/living/carbon/human/recruit, mob/living/carbon/human/recruiter)

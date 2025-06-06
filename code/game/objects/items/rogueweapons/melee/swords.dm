@@ -29,8 +29,11 @@
 	minstr = 7
 	sellprice = 30
 	wdefense = 4
+	var/accuracy_bonus = 20
 
 /obj/item/rogueweapon/sword/attack_right(mob/user)
+	if(locate(/obj/machinery/anvil) in (loc))
+		return ..()
 	if(!overlays.len)
 		if(!('icons/roguetown/weapons/swordherald.dmi' in GLOB.IconStates_cache))
 			var/icon/J = new('icons/roguetown/weapons/swordherald.dmi')
@@ -44,14 +47,19 @@
 		var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/swordherald.dmi', picked_name)
 		M.alpha = 255
 		alpha = 255
+		var/old_bigboy = bigboy
 		bigboy = 0
-		gripsprite = TRUE
+		var/old_gripsprite = gripsprite
+		gripsprite = FALSE
+		var/old_icon_state = icon_state
 		icon_state = picked_name
 		icon = 'icons/roguetown/weapons/swordherald.dmi'
 		lefthand_file = 'icons/mob/inhands/weapons/rogue_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/rogue_righthand.dmi'
 		if(alert("Are you pleased with your weapon?", "Heraldry", "Yes", "No") != "Yes")
-			icon_state = "Regular Sword"
+			icon_state = old_icon_state
+			gripsprite = old_gripsprite
+			bigboy = old_bigboy
 	else
 		..()
 
@@ -119,6 +127,7 @@
 	minstr = 6
 	wdefense = 4
 	can_cdg = TRUE
+	wlength = WLENGTH_SHORT	//It's a shortsword for crying outloud. Give it it's accuracy bonus for being short.
 
 /obj/item/rogueweapon/sword/long
 	force = 25
@@ -146,6 +155,7 @@
 	throwforce = 15
 	thrown_bclass = BCLASS_CUT
 	smeltresult = /obj/item/ingot/steel
+	accuracy_bonus = 5	//large swords are unwieldy
 
 /obj/item/rogueweapon/sword/long/death
 	color = CLOTHING_BLACK
@@ -154,13 +164,13 @@
 	. = ..()
 	if(tag)
 		switch(tag)
-			if("gen") 
+			if("gen")
 				return list("shrink" = 0.5,"sx" = -14,"sy" = -8,"nx" = 15,"ny" = -7,"wx" = -10,"wy" = -5,"ex" = 7,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -13,"sturn" = 110,"wturn" = -60,"eturn" = -30,"nflip" = 1,"sflip" = 1,"wflip" = 8,"eflip" = 1)
-			if("onback") 
+			if("onback")
 				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
-			if("wielded") 
+			if("wielded")
 				return list("shrink" = 0.6,"sx" = 6,"sy" = -2,"nx" = -4,"ny" = 2,"wx" = -8,"wy" = -1,"ex" = 8,"ey" = 3,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 15,"sturn" = -200,"wturn" = -160,"eturn" = -25,"nflip" = 8,"sflip" = 8,"wflip" = 0,"eflip" = 0)
-			if("onbelt") 
+			if("onbelt")
 				return list("shrink" = 0.6,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 
@@ -195,13 +205,13 @@
 	. = ..()
 	if(tag)
 		switch(tag)
-			if("gen") 
+			if("gen")
 				return list("shrink" = 0.5,"sx" = -14,"sy" = -8,"nx" = 15,"ny" = -7,"wx" = -10,"wy" = -5,"ex" = 7,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -13,"sturn" = 110,"wturn" = -60,"eturn" = -30,"nflip" = 1,"sflip" = 1,"wflip" = 8,"eflip" = 1)
-			if("onback") 
+			if("onback")
 				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
-			if("wielded") 
+			if("wielded")
 				return list("shrink" = 0.6,"sx" = 6,"sy" = -2,"nx" = -4,"ny" = 2,"wx" = -8,"wy" = -1,"ex" = 8,"ey" = 3,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 15,"sturn" = -200,"wturn" = -160,"eturn" = -25,"nflip" = 8,"sflip" = 8,"wflip" = 0,"eflip" = 0)
-			if("onbelt") 
+			if("onbelt")
 				return list("shrink" = 0.4,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 
@@ -238,13 +248,13 @@
 	. = ..()
 	if(tag)
 		switch(tag)
-			if("gen") 
+			if("gen")
 				return list("shrink" = 0.5,"sx" = -14,"sy" = -8,"nx" = 15,"ny" = -7,"wx" = -10,"wy" = -5,"ex" = 7,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -13,"sturn" = 110,"wturn" = -60,"eturn" = -30,"nflip" = 1,"sflip" = 1,"wflip" = 8,"eflip" = 1)
-			if("onback") 
+			if("onback")
 				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
-			if("wielded") 
+			if("wielded")
 				return list("shrink" = 0.4,"sx" = 3,"sy" = 4,"nx" = -1,"ny" = 4,"wx" = -8,"wy" = 3,"ex" = 7,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 15,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
-			if("onbelt") 
+			if("onbelt")
 				return list("shrink" = 0.4,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogueweapon/sword/long/vlord
@@ -281,13 +291,13 @@
 	. = ..()
 	if(tag)
 		switch(tag)
-			if("gen") 
+			if("gen")
 				return list("shrink" = 0.5,"sx" = -14,"sy" = -8,"nx" = 15,"ny" = -7,"wx" = -10,"wy" = -5,"ex" = 7,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -13,"sturn" = 110,"wturn" = -60,"eturn" = -30,"nflip" = 1,"sflip" = 1,"wflip" = 8,"eflip" = 1)
-			if("onback") 
+			if("onback")
 				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
-			if("wielded") 
+			if("wielded")
 				return list("shrink" = 0.4,"sx" = 3,"sy" = 4,"nx" = -1,"ny" = 4,"wx" = -8,"wy" = 3,"ex" = 7,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 15,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
-			if("onbelt") 
+			if("onbelt")
 				return list("shrink" = 0.4,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogueweapon/sword/long/rider
@@ -422,9 +432,9 @@
 				return list("shrink" = 0.6,"sx" = 9,"sy" = -4,"nx" = -7,"ny" = 1,"wx" = -9,"wy" = 2,"ex" = 10,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -190,"wturn" = -170,"eturn" = -10,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
 			if("onback")
 				return list("shrink" = 0.6,"sx" = -1,"sy" = 3,"nx" = -1,"ny" = 2,"wx" = 3,"wy" = 4,"ex" = -1,"ey" = 5,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 20,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
-			if("onbelt") 
+			if("onbelt")
 				return list("shrink" = 0.4,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
-				
+
 /obj/item/rogueweapon/sword/long/exe/cloth
 	icon_state = "terminusest"
 	name = "Terminus Est"
@@ -447,6 +457,8 @@
 	can_cdg = TRUE
 
 /obj/item/rogueweapon/sword/iron/attack_right(mob/user)
+	if(locate(/obj/machinery/anvil) in (loc))
+		return ..()
 	if(!overlays.len)
 		if(!('icons/roguetown/weapons/iswordherald.dmi' in GLOB.IconStates_cache))
 			var/icon/J = new('icons/roguetown/weapons/iswordherald.dmi')
@@ -460,12 +472,13 @@
 		var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/iswordherald.dmi', picked_name)
 		M.alpha = 255
 		alpha = 255
+		var/old_icon_state = icon_state
 		icon_state = picked_name
 		icon = 'icons/roguetown/weapons/iswordherald.dmi'
 		lefthand_file = 'icons/mob/inhands/weapons/rogue_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/rogue_righthand.dmi'
 		if(alert("Are you pleased with your weapon?", "Heraldry", "Yes", "No") != "Yes")
-			icon_state = "Regular Sword"
+			icon_state = old_icon_state
 	else
 		..()
 
@@ -477,6 +490,7 @@
 	gripped_intents = null
 	minstr = 4
 	wdefense = 3
+	wlength = WLENGTH_SHORT	//It's a shortsword for crying outloud. Give it it's accuracy bonus for being short.
 
 /obj/item/rogueweapon/sword/iron/short/chipped
 	force = 17
@@ -522,6 +536,7 @@
 	minstr = 5
 	wdefense = 6
 	wbalance = 1
+	accuracy_bonus = 10
 
 /datum/intent/sword/cut/sabre
 	clickcd = 10
@@ -553,6 +568,7 @@
 	minstr = 6
 	wdefense = 7
 	wbalance = 1
+	accuracy_bonus = 5	//Rapiers are already wildly accurate due to stab bonus
 
 /obj/item/rogueweapon/sword/rapier/getonmobprop(tag)
 	. = ..()
@@ -675,127 +691,11 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	var/last_used = 0
 
-/obj/item/rogueweapon/sword/sabre/elf/pickup(mob/user)
-	. = ..()
-	var/mob/living/carbon/human/H = user
-	var/datum/antagonist/vampirelord/V_lord = H.mind.has_antag_datum(/datum/antagonist/vampirelord/)
-	var/datum/antagonist/werewolf/W = H.mind.has_antag_datum(/datum/antagonist/werewolf/)
-	if(ishuman(H))
-		if(H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser))
-			to_chat(H, span_userdanger("I can't pick up the silver, it is my BANE!"))
-			H.Knockdown(10)
-			H.Paralyze(10)
-			H.adjustFireLoss(25)
-			H.fire_act(1,10)
-		if(V_lord)
-			if(V_lord.vamplevel < 4 && !H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser))
-				to_chat(H, span_userdanger("I can't pick up the silver, it is my BANE!"))
-				H.Knockdown(10)
-				H.Paralyze(10)
-		if(W && W.transformed == TRUE)
-			to_chat(H, span_userdanger("I can't pick up the silver, it is my BANE!"))
-			H.Knockdown(10)
-			H.Paralyze(10)
-			H.adjustFireLoss(25)
-			H.fire_act(1,10)
-
-
-/obj/item/rogueweapon/sword/sabre/elf/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
-	. = ..()
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/datum/antagonist/vampirelord/V_lord = H.mind.has_antag_datum(/datum/antagonist/vampirelord/)
-		var/datum/antagonist/werewolf/W = H.mind.has_antag_datum(/datum/antagonist/werewolf/)
-		if(H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser))
-			to_chat(H, span_userdanger("I can't equip the silver, it is my BANE!"))
-			H.Knockdown(10)
-			H.Paralyze(10)
-			H.adjustFireLoss(25)
-			H.fire_act(1,10)
-		if(V_lord)
-			if(V_lord.vamplevel < 4 && !H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser))
-				to_chat(H, span_userdanger("I can't equip the silver, it is my BANE!"))
-				H.Knockdown(10)
-				H.Paralyze(10)
-		if(W && W.transformed == TRUE)
-			to_chat(H, span_userdanger("I can't equip the silver, it is my BANE!"))
-			H.Knockdown(10)
-			H.Paralyze(10)
-			H.adjustFireLoss(25)
-			H.fire_act(1,10)
-
-
-/obj/item/rogueweapon/sword/sabre/elf/funny_attack_effects(mob/living/target, mob/living/user = usr, nodmg)
-	if(world.time < src.last_used + 100)
-		to_chat(user, span_notice("The silver effect is on cooldown."))
-		return
-
-	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/s_user = user
-		var/mob/living/carbon/human/H = target
-		var/datum/antagonist/werewolf/W = H.mind.has_antag_datum(/datum/antagonist/werewolf/)
-		var/datum/antagonist/vampirelord/lesser/V = H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser)
-		var/datum/antagonist/vampirelord/V_lord = H.mind.has_antag_datum(/datum/antagonist/vampirelord/)
-		if(V)
-			if(V.disguised)
-				H.Knockdown(10)
-				H.Paralyze(10)
-				H.visible_message("<font color='white'>The silver weapon manifests the [H] curse!</font>")
-				to_chat(H, span_userdanger("I'm hit by my BANE!"))
-				H.adjustFireLoss(25)
-				H.fire_act(1,10)
-				H.apply_status_effect(/datum/status_effect/debuff/silver_curse)
-				src.last_used = world.time
-			else
-				H.Stun(20)
-				to_chat(H, span_userdanger("I'm hit by my BANE!"))
-				H.Knockdown(10)
-				H.Paralyze(10)
-				H.adjustFireLoss(25)
-				H.fire_act(1,10)
-				H.apply_status_effect(/datum/status_effect/debuff/silver_curse)
-				src.last_used = world.time
-		if(V_lord)
-			if(V_lord.vamplevel < 4 && !V)
-				H.Knockdown(10)
-				H.Paralyze(10)
-				to_chat(H, span_userdanger("I'm hit by my BANE!"))
-				H.adjustFireLoss(25)
-				H.fire_act(1,10)
-				src.last_used = world.time
-			if(V_lord.vamplevel == 4 && !V)
-				s_user.Stun(10)
-				s_user.Paralyze(10)
-				s_user.adjustFireLoss(25)
-				s_user.fire_act(1,10)
-				to_chat(s_user, "<font color='red'> The silver weapon fails!</font>")
-				H.visible_message(H, span_userdanger("This feeble metal can't hurt me, I AM THE ANCIENT!"))
-		if(W && W.transformed == TRUE)
-			H.adjustFireLoss(25)
-			H.Paralyze(10)
-			H.Stun(10)
-			H.adjustFireLoss(25)
-			H.fire_act(1,10)
-			to_chat(H, span_userdanger("I'm hit by my BANE!"))
-			src.last_used = world.time
-
 /obj/item/rogueweapon/sword/sabre/elf/Initialize()
 	.=..()
 	var/datum/magic_item/mundane/silver/effect = new
 	AddComponent(/datum/component/magic_item, effect)
 
-/obj/item/rogueweapon/sword/gladius
-	force = 22
-	name = "Gladius"
-	desc = "A bronze short sword with a slightly wider end, and no guard. Compliments a shield."
-	icon_state = "gladius"
-	gripped_intents = null
-	smeltresult = /obj/item/ingot/bronze
-	max_blade_int = 100
-	max_integrity = 200
-	dropshrink = 0.80
-	wdefense = 2
 /obj/item/rogueweapon/sword/sabre_freeze
 	name = "Freezing Saber"
 	desc = "A fragile sabre adorned with a bright blue freezing mist. Holding the blade feels like it might give you frostbite."
@@ -852,3 +752,22 @@
 		if(istype(I))
 			I.afterchange()
 	update_icon()
+
+// BRONZE SWORDS
+//Design goal: Bronze on par with Iron integrity wise, with low defense. However, it has high AP.
+
+/obj/item/rogueweapon/sword/gladius
+	force = 22
+	name = "Gladius"
+	desc = "An artificed bronze short sword with no guard. Meant to slash through armor, compliments a shield."
+	icon_state = "gladius"
+	possible_item_intents = list(/datum/intent/sword/cut/bronze, /datum/intent/sword/thrust)
+	gripped_intents = null
+	smeltresult = /obj/item/ingot/bronze
+	max_blade_int = 100
+	max_integrity = 150
+	dropshrink = 0.80
+	wdefense = 2
+
+/datum/intent/sword/cut/bronze
+	penfactor = 60

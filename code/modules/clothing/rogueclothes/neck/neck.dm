@@ -377,8 +377,8 @@
 	. = ..()
 	name = "cursed collar"
 	resistance_flags = FIRE_PROOF
-	ADD_TRAIT(src, TRAIT_NO_SELF_UNEQUIP, CURSED_ITEM_TRAIT)
 	clothing_flags = ITEM_SLOT_NECK
+	allow_self_unequip = FALSE
 	icon = 'modular/icons/obj/items/leashes_collars.dmi'
 	mob_overlay_icon = 'modular/icons/mob/collars_leashes.dmi'
 	icon_state = "leathercollar"
@@ -440,7 +440,7 @@
 /obj/item/clothing/neck/roguetown/fencerguard
 	name = "fencer neckguard"
 	icon_state = "fencercollar"
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "piercing" = 100, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 65, "slash" = 75, "stab" = 90, "bullet" = 100, "fire" = 0, "acid" = 0)
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/skill/craft/blacksmithing
 	max_integrity = 150

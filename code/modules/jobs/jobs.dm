@@ -95,6 +95,7 @@ GLOBAL_LIST_INIT(church_positions, list(
 	"Mortician",
 	"Templar",
 	"Druid",
+	"Hospitaller",
 ))
 
 GLOBAL_LIST_INIT(inquisition_positions, list(
@@ -128,7 +129,7 @@ GLOBAL_LIST_INIT(peasant_positions, list(
 	"Towner",
 	"Nightmaster",
 	"Henchman",
-	"Prostitute",
+	"Nightswain",
 	"Docker",
 	"Prisoner",
 	"Beggar",

@@ -44,6 +44,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 		SPELL_ARCYNE_STORM,			// 2 cost	combat, light damaging AOE, stall/area denial spell
 		SPELL_DARKVISION,			// 2 cost	utility, dark sight
 		SPELL_HASTE,				// 2 cost	utility/combatbuff, faster mve speed.
+		SPELL_ENLARGE,				// 2 cost 	utility/combatbuff, less spd more str and con
 		SPELL_SUMMON_WEAPON,		// 2 cost	utility/combat, summons a marked weapon to caster.
 		SPELL_MENDING,				// 2 cost	utility, repairs items
 		SPELL_MESSAGE,				// 2 cost	utility, messages anyone you know the name of.
@@ -702,7 +703,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 	var/skill_level = user.mind?.get_skill_level(attached_spell.associated_skill)
 	cleanspeed = initial(cleanspeed) - (skill_level * 3) // 3 cleanspeed per skill level, from 35 down to a maximum of 17 (pretty quick)
 
-	if (istype(target, /obj/effect/decal/cleanable))
+	if (istype(target, /obj/effect/decal/cleanable) || istype(target, /obj/effect/decal/remains))
 		user.visible_message(span_notice("[user] gestures at \the [target.name], arcyne power slowly scouring it away..."), span_notice("I begin to scour \the [target.name] away with my arcyne power..."))
 		if (do_after(user, src.cleanspeed, target = target))
 			to_chat(user, span_notice("I expunge \the [target.name] with my mana."))
@@ -916,9 +917,12 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 		if(HL.real_name == input)
 			var/message = stripped_input(user, "You make a connection. What are you trying to say?")
 			if(!message)
+				revert_cast()
 				return
 			to_chat(HL, "Arcyne whispers fill the back of my head, resolving into a clear, if distant, voice: </span><font color=#7246ff>\"[message]\"</font>")
+			HL.playsound_local(HL, 'sound/magic/message.ogg', 100)
 			log_game("[key_name(user)] sent a message to [key_name(HL)] with contents [message]")
+			to_chat(user, span_notice("I close my eyes and focus my mind towards [HL.real_name]... The words I speak enter their head: </span><font color=#7246ff>\"[message]\"</font>"))
 			// maybe an option to return a message, here?
 			return TRUE
 	to_chat(user, span_warning("I seek a mental connection, but can't find [input]."))
@@ -927,6 +931,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 /obj/effect/proc_holder/spell/invoked/push_spell
 	name = "Repulse"
 	desc = "Conjure forth a wave of energy, repelling anyone around you."
+	overlay_state = "repulse"
 	cost = 3
 	xp_gain = TRUE
 	releasedrain = 50
@@ -1048,6 +1053,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 /obj/effect/proc_holder/spell/targeted/touch/nondetection
 	name = "Nondetection"
 	desc = "Consume a handful of ash and shroud a target that you touch from divination magic for 1 hour."
+	overlay_state = "nondetection"
 	clothes_req = FALSE
 	drawmessage = "I prepare to form a magical shroud."
 	dropmessage = "I release my arcyne focus."
@@ -1114,6 +1120,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 /obj/effect/proc_holder/spell/targeted/touch/darkvision
 	name = "Darkvision"
 	desc = "Enhance the night vision of a target you touch for an hour."
+	overlay_state = "darkvision"
 	clothes_req = FALSE
 	drawmessage = "I prepare to grant Darkvision."
 	dropmessage = "I release my arcyne focus."
@@ -1186,6 +1193,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 /obj/effect/proc_holder/spell/invoked/haste
 	name = "Haste"
 	desc = "Cause a target to be magically hastened."
+	overlay_state = "haste"
 	cost = 2
 	xp_gain = TRUE
 	releasedrain = 50
@@ -1218,6 +1226,50 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 
 	return TRUE
 
+
+/obj/effect/proc_holder/spell/invoked/enlarge
+	name = "Enlarge"
+	desc = "Cause a target to be magically enlarged."
+	overlay_state = "enlarge"
+	cost = 2
+	xp_gain = TRUE
+	releasedrain = 50
+	chargedrain = 1
+	chargetime = 2 SECONDS
+	charge_max = 2.5 MINUTES
+	warnie = "spellwarning"
+	school = "transmutation"
+	no_early_release = TRUE
+	movement_interrupt = FALSE
+	charging_slowdown = 2
+	chargedloop = /datum/looping_sound/invokegen
+	associated_skill = /datum/skill/magic/arcane
+	invocation = "Su Magnus!"
+	invocation_type = "shout"
+
+/obj/effect/proc_holder/spell/invoked/enlarge/cast(list/targets, mob/user)
+	var/atom/A = targets[1]
+	if(!isliving(A))
+		revert_cast()
+		return
+
+	var/mob/living/spelltarget = A
+	spelltarget.apply_status_effect(/datum/status_effect/buff/enlarge)
+
+	if(spelltarget != user)
+		if(!(isseelie(spelltarget)))
+			user.visible_message("[user] mutters an incantation and [spelltarget] starts to rapidly grow in size.")
+		else
+			user.visible_message("[user] mutters an incantation and [spelltarget]'s muscles bulge and grow on their tiny frame.")
+	else
+		if(!(isseelie(spelltarget)))
+			user.visible_message("[user] mutters an incantation and they rapidly start to grow in size.")
+		else
+			user.visible_message("[user] mutters an incantation and their muscles bulge and grow on their tiny frame.")
+
+	return TRUE
+
+
 /obj/effect/proc_holder/spell/invoked/findfamiliar
 	name = "Find Familiar"
 	desc = "Summons a temporary spectral volf to aid you. Hostile to all but yourself. Summon with care."
@@ -1233,7 +1285,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 	clothes_req = FALSE
 	active = FALSE
 	sound = 'sound/blank.ogg'
-	overlay_state = "forcewall"
+	overlay_state = "familiar"
 	range = -1
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
@@ -1290,7 +1342,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 	desc = "A ray of frozen energy, slowing the first thing it touches and lightly damaging it."
 	range = 8
 	projectile_type = /obj/projectile/magic/frostbolt
-	overlay_state = "null"
+	overlay_state = "frostbolt"
 	sound = list('sound/magic/whiteflame.ogg')
 	active = FALSE
 
@@ -1349,7 +1401,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 /obj/effect/proc_holder/spell/targeted/lightninglure
 	name = "Lightning Lure"
 	desc = "An electric connection forms between you and the target, and after several seconds of build up, shocks the target if they remain nearby."
-	overlay_state = "null"
+	overlay_state = "lightning_lure"
 	releasedrain = 50
 	chargetime = 1
 	charge_max = 12 SECONDS
@@ -1432,7 +1484,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 		if(I.obj_integrity < I.max_integrity)
 			var/repair_percent = 0.25
 			repair_percent *= I.max_integrity
-			I.obj_integrity = min(I.obj_integrity + repair_percent, I.max_integrity)
+			I.mend_damage(repair_percent, TRUE)
 			user.visible_message(span_info("[I] glows in a faint mending light."))
 		else
 			user.visible_message(span_info("[I] appears to be in pefect condition."))
@@ -1504,6 +1556,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 /obj/effect/proc_holder/spell/invoked/meteor_storm
 	name = "Meteor storm"
 	desc = "Summons forth dangerous meteors from the sky to scatter and smash foes."
+	overlay_state = "meteor_storm"
 	cost = 13
 	releasedrain = 50
 	chargedrain = 1
@@ -1656,7 +1709,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 							var/obj/item/bodypart/part = X
 							if(item_to_retrieve in part.embedded_objects)
 								part.remove_embedded_object(item_to_retrieve)
-								to_chat(C, span_warning("The [item_to_retrieve] that was embedded in your [L] has mysteriously vanished. How fortunate!"))
+								to_chat(C, span_warning("The [item_to_retrieve] that was embedded in your [part.name] has mysteriously vanished. How fortunate!"))
 								break
 					if(!isturf(item_to_retrieve.loc))
 						item_to_retrieve = item_to_retrieve.loc
@@ -1684,6 +1737,7 @@ Unless of course, they went heavy into the gameplay loop, and got a better book.
 /obj/effect/proc_holder/spell/invoked/sundering_lightning
 	name = "Sundering Lightning"
 	desc = "Summons forth dangerous rapid lightning strikes."
+	overlay_state = "lightning_sunder"
 	cost = 13
 	releasedrain = 50
 	chargedrain = 1

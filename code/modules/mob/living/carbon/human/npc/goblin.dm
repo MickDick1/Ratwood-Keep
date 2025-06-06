@@ -15,7 +15,7 @@
 
 /mob/living/carbon/human/species/goblin/npc
 	aggressive=1
-	mode = AI_IDLE
+	mode = NPC_AI_IDLE
 	dodgetime = 30 //they can dodge easily, but have a cooldown on it
 	flee_in_pain = TRUE
 
@@ -145,8 +145,8 @@
 	icon_state = ""
 	var/list/standing = list()
 	var/mutable_appearance/body_overlay
-	var/obj/item/bodypart/chesty = get_bodypart("chest")
-	var/obj/item/bodypart/headdy = get_bodypart("head")
+	var/obj/item/bodypart/chesty = get_bodypart(BODY_ZONE_CHEST)
+	var/obj/item/bodypart/headdy = get_bodypart(BODY_ZONE_HEAD)
 	if(!headdy)
 		if(chesty && chesty.skeletonized)
 			body_overlay = mutable_appearance(icon, "goblin_skel_decap", -BODY_LAYER)
@@ -199,7 +199,7 @@
 	//addtimer(CALLBACK(src, PROC_REF(after_creation)), 10)
 
 /mob/living/carbon/human/species/goblin/handle_combat()
-	if(mode == AI_HUNT)
+	if(mode == NPC_AI_HUNT)
 		if(prob(2))
 			emote("laugh")
 	. = ..()
@@ -210,7 +210,7 @@
 	if(src.dna && src.dna.species)
 		src.dna.species.soundpack_m = new /datum/voicepack/male/goblin()
 		src.dna.species.soundpack_f = new /datum/voicepack/male/goblin()
-		var/obj/item/headdy = get_bodypart("head")
+		var/obj/item/headdy = get_bodypart(BODY_ZONE_HEAD)
 		if(headdy)
 			headdy.icon = 'icons/roguetown/mob/monster/goblins.dmi'
 			headdy.icon_state = "[src.dna.species.id]_head"
@@ -231,9 +231,11 @@
 	real_name = "goblin"
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_NOSTAMINA, TRAIT_GENERIC)
+//	ADD_TRAIT(src, TRAIT_NOSTAMINA, TRAIT_GENERIC)
 //	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
 //	blue breathes underwater, need a new specific one for this maybe organ cheque
+	if(is_species(src, /datum/species/goblin/sea))
+		ADD_TRAIT(src, TRAIT_WATERBREATHING, TRAIT_GENERIC)
 //	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
 	if(gob_outfit)
 		var/datum/outfit/O = new gob_outfit

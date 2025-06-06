@@ -16,7 +16,7 @@
 
 /mob/living/carbon/human/species/orc/npc
 	aggressive=1
-	mode = AI_IDLE
+	mode = NPC_AI_IDLE
 	dodgetime = 15 //they can dodge easily, but have a cooldown on it
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -31,7 +31,7 @@
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/npc/orc/ambush)
 	aggressive=1
-	mode = AI_IDLE
+	mode = NPC_AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -69,8 +69,8 @@
 	icon_state = ""
 	var/list/standing = list()
 	var/mutable_appearance/body_overlay
-	var/obj/item/bodypart/chesty = get_bodypart("chest")
-	var/obj/item/bodypart/headdy = get_bodypart("head")
+	var/obj/item/bodypart/chesty = get_bodypart(BODY_ZONE_CHEST)
+	var/obj/item/bodypart/headdy = get_bodypart(BODY_ZONE_HEAD)
 	if(!headdy)
 		if(chesty && chesty.skeletonized)
 			body_overlay = mutable_appearance(icon, "orc_skel_decap", -BODY_LAYER)
@@ -118,7 +118,7 @@
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 
 /mob/living/carbon/human/species/orc/handle_combat()
-	if(mode == AI_HUNT)
+	if(mode == NPC_AI_HUNT)
 		if(prob(2))
 			emote("aggro")
 	. = ..()
@@ -135,7 +135,7 @@
 	mind.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
 
 /mob/living/carbon/human/species/orc/handle_combat()
-	if(mode == AI_HUNT)
+	if(mode == NPC_AI_HUNT)
 		if(prob(2))
 			emote("aggro")
 	. = ..()
@@ -145,7 +145,7 @@
 	gender = MALE
 	if(src.dna && src.dna.species)
 		src.dna.species.soundpack_m = new /datum/voicepack/orc()
-		var/obj/item/headdy = get_bodypart("head")
+		var/obj/item/headdy = get_bodypart(BODY_ZONE_HEAD)
 		if(headdy)
 			headdy.icon = 'icons/roguetown/mob/monster/Orc.dmi'
 			headdy.icon_state = "[src.dna.species.id]_head"
@@ -337,7 +337,7 @@
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/npc/orc/tribal)
 	aggressive=1
-	mode = AI_IDLE
+	mode = NPC_AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -388,7 +388,7 @@
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/npc/orc/warrior)
 	aggressive=1
-	mode = AI_IDLE
+	mode = NPC_AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -460,7 +460,7 @@
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/npc/orc/marauder)
 	aggressive=1
-	mode = AI_IDLE
+	mode = NPC_AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -515,7 +515,7 @@
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/npc/orc/warlord)
 	aggressive=1
-	mode = AI_IDLE
+	mode = NPC_AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -558,7 +558,7 @@
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/npc/orc/warlord)
 	aggressive=1
-	mode = AI_IDLE
+	mode = NPC_AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE

@@ -87,7 +87,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/refugeelate
 	name = "refugeelate"
 	icon_state = "arrow"
-	jobspawn_override = list("Skeleton", "Refugee", "Migrant")
+	jobspawn_override = list("Skeleton", "Refugee", "Migrant", "Adventurer")
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/banditlate
@@ -240,6 +240,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Acolyte"
 	icon_state = "arrow"
 
+/obj/effect/landmark/start/hospitaller
+	name = "Hospitaller"
+	icon_state = "arrow"
+
 /obj/effect/landmark/start/druid
 	name = "Druid"
 	icon_state = "arrow"
@@ -261,7 +265,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/nightmaiden
-	name = "Prostitute"
+	name = "Nightswain"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/merchant

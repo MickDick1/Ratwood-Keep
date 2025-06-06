@@ -95,10 +95,10 @@
 		return !density
 
 /obj/structure/table/CanAStarPass(ID, dir, caller)
-	. = !density
+	. = ..()
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSTABLE)
+		. ||= (mover.pass_flags & PASSTABLE)
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
@@ -253,7 +253,7 @@
 		check_break(M)
 
 /obj/structure/table/glass/proc/check_break(mob/living/M)
-	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & FLYING))
+	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !M.is_floor_hazard_immune())
 		table_shatter(M)
 
 /obj/structure/table/glass/proc/table_shatter(mob/living/L)
@@ -351,6 +351,15 @@
 	smooth = 0
 	debris = list(/obj/item/grown/log/tree/small = 2)
 	climb_offset = 10
+
+/obj/structure/table/cooling //cooling table made by artificers
+	name = "Cooling Table"
+	desc = "Used to keep your food cool and rot free"
+	icon = 'icons/roguetown/misc/tables.dmi'
+	icon_state = "coolingtable"
+	resistance_flags = FLAMMABLE
+	max_integrity = 40 //making this weak, its fragile
+	smooth = 0
 
 /obj/structure/table/finer
 	name = "wooden table"
@@ -479,10 +488,10 @@
 		return 0
 
 /obj/structure/rack/CanAStarPass(ID, dir, caller)
-	. = !density
+	. = ..()
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSTABLE)
+		. ||= (mover.pass_flags & PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	. = ..()

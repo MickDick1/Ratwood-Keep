@@ -794,7 +794,7 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDETAIL
 	block2add = FOV_BEHIND
 
-/obj/item/clothing/head/hooded/equipped(mob/user, slot)
+/obj/item/clothing/head/hooded/equipped(mob/user, slot, initial = FALSE, silent = FALSE)
 	. = ..()
 	user.update_fov_angles()
 
@@ -903,7 +903,6 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE, FEMALE)
-	allowed_race = NON_DWARVEN_RACE_TYPES
 	nodismemsleeves = TRUE
 
 
@@ -944,7 +943,6 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE, FEMALE)
-	allowed_race = NON_DWARVEN_RACE_TYPES
 	sellprice = 50
 	nodismemsleeves = TRUE
 
@@ -1070,7 +1068,7 @@
 	var/active_item = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/clothing/neck/roguetown/blkknight/equipped(mob/living/user)
+/obj/item/clothing/neck/roguetown/blkknight/equipped(mob/living/user, slot, initial = FALSE, silent = FALSE)
 	. = ..()
 	if(active_item)
 		return
@@ -1365,7 +1363,7 @@
 //----------------- MORE AZURE SPRITEWORK ---------------------
 
 /obj/item/clothing/cloak/hierophant
-	name = "hierophant's sash"
+	name = "silk sash"
 	icon_state = "naledisash"
 	item_state = "naledisash"
 	desc = "A limp piece of fabric traditionally used to fasten bags that are too baggy, but in modern days has become more of a fashion statement than anything."
@@ -1407,6 +1405,7 @@
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE, FEMALE)
+	body_parts_covered = CHEST|GROIN|VITALS|ARMS|LEGS
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE

@@ -27,6 +27,8 @@
 	blade_dulling = DULLING_BASHCHOP
 
 /obj/item/rogueweapon/mace/attack_right(mob/user)
+	if(locate(/obj/machinery/anvil) in (loc))
+		return ..()
 	if(!overlays.len)
 		if(!('icons/roguetown/weapons/maceherald.dmi' in GLOB.IconStates_cache))
 			var/icon/J = new('icons/roguetown/weapons/maceherald.dmi')
@@ -40,12 +42,13 @@
 		var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/maceherald.dmi', picked_name)
 		M.alpha = 255
 		alpha = 255
+		var/old_icon_state = icon_state
 		icon_state = picked_name
 		icon = 'icons/roguetown/weapons/maceherald.dmi'
 		lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 		if(alert("Are you pleased with your weapon?", "Heraldry", "Yes", "No") != "Yes")
-			icon_state = "Regular Mace"
+			icon_state = old_icon_state
 	else
 		..()
 
@@ -72,6 +75,8 @@
 	wdefense = 3
 
 /obj/item/rogueweapon/mace/steel/attack_right(mob/user)
+	if(locate(/obj/machinery/anvil) in (loc))
+		return ..()
 	if(!overlays.len)
 		if(!('icons/roguetown/weapons/smaceherald.dmi' in GLOB.IconStates_cache))
 			var/icon/J = new('icons/roguetown/weapons/smaceherald.dmi')
@@ -85,12 +90,13 @@
 		var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/smaceherald.dmi', picked_name)
 		M.alpha = 255
 		alpha = 255
+		var/old_icon_state = icon_state
 		icon_state = picked_name
 		icon = 'icons/roguetown/weapons/smaceherald.dmi'
 		lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 		if(alert("Are you pleased with your weapon?", "Heraldry", "Yes", "No") != "Yes")
-			icon_state = "Regular S.Mace"
+			icon_state = old_icon_state
 	else
 		..()
 

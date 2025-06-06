@@ -181,11 +181,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/icon/experimental_onhip = FALSE
 	var/icon/experimental_onback = FALSE
 
-	var/do_sound_bell = FALSE
-	var/do_sound_chain = FALSE
-	var/do_sound_plate = FALSE
-	var/bell = FALSE
-
 	///trying to emote or talk with this in our mouth makes us muffled
 	var/muteinmouth = TRUE
 	///using spit emote spits the item out of our mouth and falls out after some time
@@ -541,7 +536,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		else
 			user.visible_message(span_warning("[user] burns [user.p_their()] hand putting out the fire on [src]!"))
 			extinguish()
-			var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+			var/obj/item/bodypart/affecting = C.get_bodypart((user.active_hand_index % 2 == 0) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
 			if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 				C.update_damage_overlays()
 			return
@@ -551,7 +546,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(istype(C))
 			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
 				to_chat(user, span_warning("The acid on [src] burns my hand!"))
-				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+				var/obj/item/bodypart/affecting = C.get_bodypart((user.active_hand_index % 2 == 0) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
 				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 					C.update_damage_overlays()
 
@@ -677,7 +672,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 // for items that can be placed in multiple slots
 // The slot == refers to the new location of the item
 // Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
-/obj/item/proc/equipped(mob/user, slot, initial = FALSE)
+/obj/item/proc/equipped(mob/user, slot, initial = FALSE, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
@@ -685,7 +680,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 	item_flags |= IN_INVENTORY
-	if(!initial)
+	if(!initial && !silent) // Only non initial, non silent play (silent is false by default)
 		var/slotbit = slotdefine2slotbit(slot)
 		if(slot == ITEM_SLOT_HANDS)
 			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
@@ -811,7 +806,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(prob(50))
 			if(M.stat != DEAD)
 				if(M.drop_all_held_items())
-					to_chat(M, span_danger("I drop what you're holding and clutch at my eyes!"))
+					to_chat(M, span_danger("I drop what I'm holding and clutch at my eyes!"))
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
 			M.Paralyze(40)
@@ -1274,16 +1269,16 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			str = "<font color = '[color]'>[input] (D)</font>"
 		if(20 to 39)
 			var/color = "#753e11"
-			str = "<font color = '[color]'>[input] (D+)</font>" 
+			str = "<font color = '[color]'>[input] (D+)</font>"
 		if(40 to 49)
 			var/color = "#c0a739"
-			str = "<font color = '[color]'>[input] (C)</font>" 
+			str = "<font color = '[color]'>[input] (C)</font>"
 		if(50 to 59)
 			var/color = "#e3e63c"
-			str = "<font color = '[color]'>[input] (C+)</font>" 
+			str = "<font color = '[color]'>[input] (C+)</font>"
 		if(60 to 69)
 			var/color = "#425c33"
-			str = "<font color = '[color]'>[input] (B)</font>" 
+			str = "<font color = '[color]'>[input] (B)</font>"
 		if(70 to 79)
 			var/color = "#1a9c00"
 			str = "<font color = '[color]'>[input] (B+)</font>"

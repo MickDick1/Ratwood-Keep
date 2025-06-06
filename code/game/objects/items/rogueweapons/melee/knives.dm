@@ -30,6 +30,8 @@
 	can_cdg = TRUE
 
 /obj/item/rogueweapon/huntingknife/attack_right(mob/user)
+	if(locate(/obj/machinery/anvil) in (loc))
+		return ..()
 	if(!overlays.len)
 		if(!('icons/roguetown/weapons/idaggerherald.dmi' in GLOB.IconStates_cache))
 			var/icon/J = new('icons/roguetown/weapons/idaggerherald.dmi')
@@ -43,12 +45,13 @@
 		var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/idaggerherald.dmi', picked_name)
 		M.alpha = 255
 		alpha = 255
+		var/old_icon_state = icon_state
 		icon_state = picked_name
 		icon = 'icons/roguetown/weapons/idaggerherald.dmi'
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 		if(alert("Are you pleased with your weapon?", "Heraldry", "Yes", "No") != "Yes")
-			icon_state = "Hunting Knife"
+			icon_state = old_icon_state
 	else
 		..()
 
@@ -251,6 +254,8 @@
 	can_assin = TRUE
 
 /obj/item/rogueweapon/huntingknife/idagger/attack_right(mob/user)
+	if(locate(/obj/machinery/anvil) in (loc))
+		return ..()
 	if(!overlays.len)
 		if(!('icons/roguetown/weapons/idaggerherald.dmi' in GLOB.IconStates_cache))
 			var/icon/J = new('icons/roguetown/weapons/idaggerherald.dmi')
@@ -264,12 +269,13 @@
 		var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/idaggerherald.dmi', picked_name)
 		M.alpha = 255
 		alpha = 255
+		var/old_icon_state = icon_state
 		icon_state = picked_name
 		icon = 'icons/roguetown/weapons/idaggerherald.dmi'
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 		if(alert("Are you pleased with your weapon?", "Heraldry", "Yes", "No") != "Yes")
-			icon_state = "Regular Dagger"
+			icon_state = old_icon_state
 	else
 		..()
 
@@ -281,6 +287,8 @@
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/attack_right(mob/user)
+	if(locate(/obj/machinery/anvil) in (loc))
+		return ..()
 	if(!overlays.len)
 		if(!('icons/roguetown/weapons/daggerherald.dmi' in GLOB.IconStates_cache))
 			var/icon/J = new('icons/roguetown/weapons/daggerherald.dmi')
@@ -294,12 +302,13 @@
 		var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/daggerherald.dmi', picked_name)
 		M.alpha = 255
 		alpha = 255
+		var/old_icon_state = icon_state
 		icon_state = picked_name
 		icon = 'icons/roguetown/weapons/daggerherald.dmi'
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 		if(alert("Are you pleased with your weapon?", "Heraldry", "Yes", "No") != "Yes")
-			icon_state = "Regular Dagger"
+			icon_state = old_icon_state
 	else
 		..()
 

@@ -54,6 +54,12 @@
 	var/boneboy = FALSE
 	var/bonenecro = null
 
+	//Druid Awakened Animal Trackers
+	var/awakened_animals = 0
+	var/awakened_max = 2
+	var/awakened = FALSE
+	var/awaken_caster = null
+
 	var/linglink
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
@@ -89,6 +95,8 @@
 	var/list/known_people = list() //contains person, their job, and their voice color
 
 	var/list/notes = list() //RTD add notes button
+
+	var/list/special_people = list() // For characters whose text will display in a different colour when seen by this Mind
 
 	var/lastrecipe
 
@@ -415,22 +423,33 @@
 /datum/mind/proc/set_boneboy(value)
 	boneboy = value
 
+/datum/mind/proc/adjust_awakened(points)
+	awakened_animals += points
+
+/datum/mind/proc/set_awaken_caster(name)
+	awaken_caster = name
+
+/datum/mind/proc/set_awakened(value)
+	awakened = value
+
 ///Gets the skill's singleton and returns the result of its get_skill_speed_modifier
 /datum/mind/proc/get_skill_speed_modifier(skill)
 	var/datum/skill/S = GetSkillRef(skill)
-	return S.get_skill_speed_modifier(known_skills[S] || SKILL_LEVEL_NONE)
+	return S.get_skill_speed_modifier(get_skill_level(skill))
 
 /datum/mind/proc/get_skill_level(skill)
+	if(has_antag_datum(/datum/antagonist/zombie) && !current.client) // Non-player deadites don't have skills.
+		return SKILL_LEVEL_NONE
 	var/datum/skill/S = GetSkillRef(skill)
 	return known_skills[S] || SKILL_LEVEL_NONE
 
 /datum/mind/proc/get_skill_parry_modifier(skill)
 	var/datum/skill/combat/S = GetSkillRef(skill)
-	return S.get_skill_parry_modifier(known_skills[S] || SKILL_LEVEL_NONE)
+	return S.get_skill_parry_modifier(get_skill_level(skill))
 
 /datum/mind/proc/get_skill_dodge_drain(skill)
 	var/datum/skill/combat/S = GetSkillRef(skill)
-	return S.get_skill_dodge_drain(known_skills[S] || SKILL_LEVEL_NONE)
+	return S.get_skill_dodge_drain(get_skill_level(skill))
 
 /datum/mind/proc/print_levels(user)
 	var/list/shown_skills = list()
@@ -842,3 +861,16 @@
 /datum/mind/proc/add_sleep_experience(skill, amt, silent = FALSE)
 	sleep_adv.add_sleep_experience(skill, amt, silent)
 
+/datum/mind/proc/add_special_person(mob/M, special_colour)
+	if (!istext(special_colour))
+		return
+	if (!special_people[M.real_name])
+		special_people[M.real_name] = special_colour
+
+/datum/mind/proc/remove_special_person(mob/M)
+	if (special_people[M.real_name])
+		special_people -= M.real_name
+
+/datum/mind/proc/get_special_person_colour(mob/M)
+	if (special_people[M.real_name])
+		return special_people[M.real_name]
